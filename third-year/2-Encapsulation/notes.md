@@ -34,6 +34,127 @@ person1.greet(); // Output: Hello, my name is John
 **Explanation:**
 - Here, the `Person` class encapsulates two properties (`name`, `age`) and one method (`greet`). The `greet` method is used to access the `name` property and output it in the console. This is a simple example of encapsulation, where data (name and age) is encapsulated within the object, and only the `greet` method interacts with it.
 
+# Understanding Data Hiding, Access Control, and Private vs. Public Members in JavaScript
+
+## 1. Data Hiding
+**Definition**: Data hiding in JavaScript involves using private fields or closures to restrict direct access to object properties.
+
+### Example:
+```javascript
+class BankAccount {
+    #accountNumber; // Private field
+    #balance; // Private field
+
+    constructor(accountNumber, balance) {
+        this.#accountNumber = accountNumber;
+        this.#balance = balance;
+    }
+
+    getBalance() {
+        return this.#balance;
+    }
+
+    deposit(amount) {
+        if (amount > 0) {
+            this.#balance += amount;
+        } else {
+            console.log("Invalid deposit amount!");
+        }
+    }
+}
+
+// Usage
+const account = new BankAccount("123456", 5000);
+console.log(account.getBalance()); // Access through a method
+// console.log(account.#balance); // Error: Private field is not accessible
+```
+
+**Explanation**: 
+Here, `#accountNumber` and `#balance` are private fields, accessible only within the class. They ensure sensitive data is not exposed directly to the outside world.
+
+---
+
+## 2. Access Control
+**Definition**: Access control is implemented in JavaScript by defining public methods (getters and setters) to control how private properties are accessed or modified.
+
+### Example:
+```javascript
+class Employee {
+    #name; // Private field
+    #salary; // Private field
+
+    constructor(name, salary) {
+        this.#name = name;
+        this.#salary = salary;
+    }
+
+    getSalary() {
+        return this.#salary;
+    }
+
+    setSalary(newSalary) {
+        if (newSalary > 0) {
+            this.#salary = newSalary;
+        } else {
+            console.log("Salary must be a positive value!");
+        }
+    }
+}
+
+// Usage
+const employee = new Employee("John Doe", 3000);
+console.log(employee.getSalary()); // Output: 3000
+employee.setSalary(3500);
+console.log(employee.getSalary()); // Output: 3500
+employee.setSalary(-500); // Output: Salary must be a positive value!
+```
+
+**Explanation**: 
+The `#salary` property is private, and its access is controlled using `getSalary` and `setSalary` methods. This ensures encapsulation and validation when modifying the property.
+
+---
+
+## 3. Private vs. Public Members
+**Definition**: 
+- **Private Members**: These are accessible only within the class, using a `#` prefix for fields.
+- **Public Members**: These are accessible from anywhere, both within and outside the class.
+
+### Example:
+```javascript
+class Car {
+    make; // Public field
+    #model; // Private field
+
+    constructor(make, model) {
+        this.make = make;
+        this.#model = model;
+    }
+
+    getModel() {
+        return this.#model;
+    }
+
+    setModel(newModel) {
+        this.#model = newModel;
+    }
+}
+
+// Usage
+const car = new Car("Toyota", "Camry");
+console.log(car.make); // Accessing public member: Output -> Toyota
+// console.log(car.#model); // Error: Cannot access private member directly
+console.log(car.getModel()); // Accessing private member through a method: Output -> Camry
+```
+
+**Explanation**: 
+The `make` property is public and can be accessed directly. However, the `#model` property is private and requires getter and setter methods for access and modification.
+
+---
+
+**Note**: The use of `#` for private fields in JavaScript is part of the modern ECMAScript standard and is supported in most environments. If older environments are targeted, closures can be used to achieve data hiding.
+
+This version uses JavaScript examples with modern syntax and private fields to illustrate the concepts.
+
 ---
 
 ### 2. **Data Hiding and Access Control (30 mins)**
@@ -47,6 +168,7 @@ Data hiding is a technique to restrict direct access to an object's internal sta
 #### Private Members using Symbol (Introduced in ES6):
 ```javascript
 const _age = Symbol('age');
+// A Symbol is a primitive data type introduced in ES6. It is a unique and immutable value, primarily used as an identifier for object properties. Every time you create a Symbol, even with the same description, it is guaranteed to be unique.
 
 class Person {
   constructor(name, age) {
@@ -78,6 +200,63 @@ console.log(person1.getAge()); // 35
 ### 3. **Private and Public Members in JavaScript (30 mins)**
 
 JavaScript allows us to control the visibility of members using closures or newer syntax for private fields.
+
+### Private Fields in JavaScript using Closures
+
+JavaScript doesn't natively support private fields in older versions. However, closures provide a way to achieve this. Here’s how it works:
+
+#### Example Code
+
+```javascript
+function Counter() {
+  // Private variable
+  let count = 0;
+
+  // Public methods
+  return {
+    increment: function () {
+      count += 1;
+      console.log(`Count: ${count}`);
+    },
+    decrement: function () {
+      if (count > 0) {
+        count -= 1;
+      }
+      console.log(`Count: ${count}`);
+    },
+    getCount: function () {
+      return count;
+    }
+  };
+}
+
+// Create an instance of Counter
+const counter = Counter();
+
+counter.increment(); // Count: 1
+counter.increment(); // Count: 2
+console.log(counter.getCount()); // 2
+counter.decrement(); // Count: 1
+
+// Trying to access the private variable directly
+console.log(counter.count); // undefined
+```
+
+## Explanation
+
+1. **Closure Concept**:
+   - A closure is a function that remembers the variables from its lexical scope even when the function is executed outside that scope.
+   - Here, `count` is a variable defined inside the `Counter` function. It is accessible to the methods `increment`, `decrement`, and `getCount` because these methods are created within the same scope.
+
+2. **Encapsulation**:
+   - The variable `count` is not accessible outside the `Counter` function, simulating private fields.
+   - The public methods (`increment`, `decrement`, and `getCount`) act as the interface to interact with the private `count`.
+
+3. **Why Use Closures?**:
+   - Ensures better encapsulation.
+   - Protects internal state from being accidentally modified or accessed directly.
+
+This technique was commonly used before the introduction of private class fields in ECMAScript 2021.
 
 #### Using ES6 Class Fields (Private and Public Members):
 ```javascript
