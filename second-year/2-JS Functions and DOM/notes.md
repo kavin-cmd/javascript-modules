@@ -43,6 +43,70 @@ function greet(name) {
 ```
 **Explanation:** This function takes a parameter `name` and logs a greeting message using the template literal syntax.
 
+### Characteristics
+1. **Hoisted:** Function declarations are hoisted to the top of their scope. This means they can be called before they are defined in the code.
+2. **Named Function:** The function must have a name.
+3. **Reusability:** Functions defined this way can be reused throughout the code.
+
+---
+
+## Types of Functions via Declaration
+
+### 1. Simple Function Declaration
+A basic function that takes arguments and returns a value.
+```javascript
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+console.log(greet("Vikas")); // Output: Hello, Vikas!
+```
+
+### 2. Function with Default Parameters
+A function can have default values for parameters if no argument is provided during the function call.
+```javascript
+function calculateSum(a = 0, b = 0) {
+    return a + b;
+}
+console.log(calculateSum(5, 3)); // Output: 8
+console.log(calculateSum(5));    // Output: 5 (b defaults to 0)
+```
+
+### 3. Recursive Function
+A function that calls itself to perform a repeated operation.
+```javascript
+function factorial(n) {
+    if (n === 0 || n === 1) return 1;
+    return n * factorial(n - 1);
+}
+console.log(factorial(5)); // Output: 120
+```
+
+### 4. Helper Function
+These functions are smaller utility functions designed to perform specific tasks that support larger functionalities.
+```javascript
+function isEven(num) {
+    return num % 2 === 0;
+}
+console.log(isEven(4)); // Output: true
+```
+
+---
+
+## Example with Multiple Parameters
+```javascript
+function findMax(a, b, c) {
+    return Math.max(a, b, c);
+}
+console.log(findMax(10, 20, 15)); // Output: 20
+```
+
+---
+
+## Key Advantages
+1. **Readability:** Named functions improve code readability.
+2. **Reusability:** The function can be reused multiple times with different arguments.
+3. **Debugging:** Errors in named functions provide meaningful stack traces.
+
 **Practical:**
 - Write a function that calculates the square of a number.
 
