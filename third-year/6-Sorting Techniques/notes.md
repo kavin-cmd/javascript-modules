@@ -1,21 +1,19 @@
 # Introduction to Searching Techniques in JavaScript
 
-TODO: Need to decide which code to explain and respectively include explanation for each -  can't cover all in short span
-
 In this section, we will discuss various searching algorithms and techniques. Searching algorithms help us find an element in a dataset (like an array or list) efficiently. We will cover the following topics:
 
-- Linear Search
-- Binary Search
+- Linear Search &#x2611;
+- Binary Search &#x2611;
 - Interpolation Search
-- Exponential Search
+- Exponential Search &#x2611;
 - Jump Search
 - Fibonacci Search
 - Ternary Search
-- Hashing and Hash-based Search
-- String Searching: Brute Force, Knuth-Morris-Pratt (KMP), Rabin-Karp, and Boyer-Moore
+- Hashing and Hash-based Search &#x2611;
+- String Searching: Brute Force &#x2611;, Knuth-Morris-Pratt (KMP), Rabin-Karp, and Boyer-Moore
 - Searching in Sorted and Rotated Arrays
-- Searching in 2D Arrays
-- Searching in Trees: Depth-First Search (DFS) and Breadth-First Search (BFS)
+- Searching in 2D Arrays &#x2611;
+- Searching in Trees: Depth-First Search (DFS) &#x2611; and Breadth-First Search (BFS)
 
 ---
 
@@ -40,7 +38,23 @@ console.log(linearSearch(arr, 7));  // Output: -1
 ```
 
 **Explanation:**
-- **Time Complexity:** O(n) because it checks each element one by one.
+The function `linearSearch` implements the **linear search algorithm**, which is used to find the position of a target element in an **unsorted array**. Here's how it works:
+
+1. **Iteration Through Array**:
+  - The `for` loop iterates through each element of the array `arr`, starting from index `0` and going up to `arr.length - 1`.
+
+2. **Comparison**:
+  - For each iteration, the current element `arr[i]` is compared with the `target`.
+  - If `arr[i] === target`, the function immediately returns the index `i` as the target is found.
+
+3. **Termination**:
+  - If the loop completes without finding the target, the function returns `-1`, indicating that the target is not present in the array.
+
+**Space Complexity:**
+- **O(1)**: The algorithm uses constant extra space as it only requires a single loop variable (`i`), regardless of the size of the array.
+
+**Time Complexity:** 
+- O(n) because it checks each element one by one.
 - The function returns the index of the target element or `-1` if the element is not found.
 
 ---
@@ -76,8 +90,37 @@ console.log(binarySearch(arr, 7));  // Output: -1
 ```
 
 **Explanation:**
-- **Time Complexity:** O(log n), which is much faster than Linear Search for large arrays.
-- The array must be sorted for Binary Search to work correctly.
+The function `binarySearch` implements the **binary search algorithm**, which is used to find the position of a target element in a **sorted array**. Here's how it works:
+
+1. **Initialization**:
+  - `left` is initialized to 0 (start of the array).
+  - `right` is initialized to `arr.length - 1` (end of the array).
+
+2. **Iterative Search**:
+  - The loop runs as long as `left <= right`.
+  - The `mid` index is calculated using `Math.floor((left + right) / 2)` to avoid potential overflow issues in some programming languages.
+
+3. **Comparison**:
+  - If the element at the `mid` index (`arr[mid]`) is equal to the `target`, the function returns `mid`, as the target is found.
+  - If `arr[mid] < target`, it means the target lies in the right half of the array. Thus, `left` is updated to `mid + 1`.
+  - If `arr[mid] > target`, the target lies in the left half of the array. Therefore, `right` is updated to `mid - 1`.
+
+4. **Termination**:
+  - The loop terminates when `left` exceeds `right`. At this point, the `target` is not present in the array, and the function returns `-1`.
+
+---
+
+## Complexity Analysis:
+
+### Space Complexity:
+- **O(1)**: The algorithm uses constant extra space as it only maintains a few variables (`left`, `right`, `mid`) regardless of the size of the array.
+
+### Time Complexity:
+- **O(log n)**: The search space is halved in each iteration. For an array of size `n`:
+  - In the first iteration, the search space is `n`.
+  - In the second iteration, it is halved to `n/2`.
+  - This halving continues until the search space is reduced to 1.
+  - The total number of iterations is approximately **log₂(n)**.
 
 ---
 
@@ -141,8 +184,26 @@ console.log(exponentialSearch(arr, 7));  // Output: 3
 ```
 
 **Explanation:**
-- **Time Complexity:** O(log n) due to Binary Search and the exponential increase of the range.
+The `exponentialSearch` function is a search algorithm that combines the **exponential growth strategy** with **binary search** to efficiently locate a target element in a **sorted array**. Here’s a step-by-step explanation:
+
+1. **Check First Element**:
+  - The function first checks if the target is equal to the first element (`arr[0]`). If true, it immediately returns `0`.
+
+2. **Exponential Growth Phase**:
+  - The variable `i` starts at `1`.
+  - A loop runs while `i` is less than the array length and the element at `arr[i]` is less than or equal to the target.
+  - On each iteration, `i` is doubled (`i = i * 2`), effectively expanding the search range exponentially.
+
+3. **Binary Search Phase**:
+  - Once the exponential growth phase determines a range where the target might be located, binary search is performed within that range.
+  - The range is defined as `[i / 2, i]`. The `arr.slice(i / 2, i)` method creates a subarray for this range.
+  - The function uses `binarySearch` to locate the target within this range and returns the result.
+
+**Time Complexity:** O(log n) due to Binary Search and the exponential increase of the range.
 - It is useful for unbounded or infinite arrays.
+
+**Space Complexity:**
+O(log n): The subarray for binary search is created dynamically, and binary search itself requires logarithmic space due to recursive calls.
 
 ---
 
@@ -613,7 +674,29 @@ console.log(searchIn2DArray(matrix, target));  // Output: [1, 1]
 ```
 
 **Explanation:**
-- **Time Complexity:** O(m + n), where `m` is the number of rows and `n` is the number of columns.
+
+The `searchIn2DArray` function is designed to locate a target element in a **2D matrix** where:
+- Each row is sorted in ascending order from left to right.
+- Each column is sorted in ascending order from top to bottom.
+
+Here’s a step-by-step explanation:
+
+1. **Initialization**:
+  - `row` is initialized to `0` (top row).
+  - `col` is initialized to `matrix[0].length - 1` (rightmost column).
+
+2. **Search Process**:
+  - The algorithm starts at the top-right corner of the matrix (`matrix[row][col]`).
+  - In each iteration:
+    - If the current element matches the `target`, the function returns the `[row, col]` coordinates.
+    - If the current element is greater than the `target`, it moves left (`col--`) since all elements to the left are smaller.
+    - If the current element is less than the `target`, it moves down (`row++`) since all elements below are larger.
+
+3. **Termination**:
+  - The loop continues until `row` exceeds the number of rows or `col` becomes less than 0.
+  - If the loop completes without finding the target, the function returns `[-1, -1]`, indicating that the target is not present.
+
+**Time Complexity:** O(m + n), where `m` is the number of rows and `n` is the number of columns.
 - We start from the top-right corner and either move left or down based on comparisons.
 
 ---
