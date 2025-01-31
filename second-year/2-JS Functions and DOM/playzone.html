@@ -1,19 +1,12 @@
-<form id="myForm">
-  <input type="text" id="name" placeholder="Enter your name" />
-  <button type="submit">Submit</button>
-</form>
+<button onclick="toggleTheme()">Toggle Theme</button>
 <script>
-  document.getElementById("myForm").addEventListener("submit", (event) => {
-    event.preventDefault();
-    const name = document.getElementById("name").value;
-    console.log(name);
-  });
-</script>
-
-<div id="box" style="width:100px; height:100px; background:red;"></div>
-<button onclick="changeColor()">Change Color</button>
-<script>
-function changeColor() {
-  document.getElementById('box').style.background = 'blue';
+function toggleTheme() {
+    document.body.classList.toggle('dark-theme');
 }
 </script>
+<style>
+.dark-theme {
+    background-color: black;
+    color: white;
+}
+</style>

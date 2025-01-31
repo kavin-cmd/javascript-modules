@@ -218,18 +218,45 @@ console.log(evenNumbers);
 ## Section 2: HTML DOM Manipulation
 
 ### 2.1 Accessing DOM Elements
-**Theory:**
-- Use methods like `getElementById`, `querySelector`, etc.
-- Example:
 
+- Use methods like `getElementById`, `querySelector`, `getElementsByClassName`, `getElementsByTagName`, `querySelectorAll`.
+
+#### Using `getElementById`
 ```javascript
 const heading = document.getElementById('title');
 console.log(heading.textContent);
 ```
-**Explanation:** This code retrieves the DOM element with the ID `title` and logs its text content to the console.
+**Explanation:** Retrieves the DOM element with the ID `title` and logs its text content to the console.
 
-**Practical:**
-- Access and log the text of an element with ID `message`.
+#### Using `querySelector`
+```javascript
+const heading = document.querySelector('#title');
+console.log(heading.textContent);
+```
+**Explanation:** Selects the first element that matches the CSS selector `#title` and logs its text content.
+
+#### Using `getElementsByClassName`
+```javascript
+const items = document.getElementsByClassName('list-item');
+console.log(items[0].textContent);
+```
+**Explanation:** Selects all elements with the class `list-item` and logs the text content of the first element.
+
+#### Using `getElementsByTagName`
+```javascript
+const paragraphs = document.getElementsByTagName('p');
+console.log(paragraphs[0].textContent);
+```
+**Explanation:** Selects all `<p>` elements and logs the text content of the first one.
+
+#### Using `querySelectorAll`
+```javascript
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => console.log(button.textContent));
+```
+**Explanation:** Selects all `button` elements and logs their text content using `forEach`.
+
+#### Practical Example
 
 ```html
 <p id="message">Hello DOM!</p>
@@ -238,20 +265,45 @@ const message = document.getElementById('message');
 console.log(message.textContent);
 </script>
 ```
-**Explanation:** The script accesses the `<p>` element with ID `message` and logs its content "Hello DOM!" to the console.
+**Explanation:** Accesses the `<p>` element with ID `message` and logs its content "Hello DOM!".
+
+---
 
 ### 2.2 Manipulating DOM Elements
-**Theory:**
-- Modify content, styles, or attributes.
-- Example:
 
+#### Theory
+- Modify content, styles, or attributes using properties like `textContent`, `innerHTML`, `style`, `setAttribute`.
+
+#### Changing Text Content
 ```javascript
 document.getElementById('title').textContent = 'New Title';
 ```
-**Explanation:** This changes the text content of the element with the ID `title` to "New Title".
+**Explanation:** Updates the text content of the element with ID `title`.
 
-**Practical:**
-- Change the background color of a `<div>` element on button click.
+#### Changing Inner HTML
+```javascript
+document.getElementById('container').innerHTML = '<p>New content</p>';
+```
+**Explanation:** Replaces the inner HTML of `container` with a new paragraph.
+
+#### Modifying Styles
+```javascript
+document.getElementById('box').style.backgroundColor = 'blue';
+```
+**Explanation:** Changes the background color of the `box` element to blue.
+
+#### Adding/Removing Classes
+```javascript
+document.getElementById('box').classList.add('highlight');
+document.getElementById('box').classList.remove('highlight');
+```
+**Explanation:** Adds and removes the `highlight` class from the `box` element.
+
+#### Changing Attributes
+```javascript
+document.getElementById('link').setAttribute('href', 'https://example.com');
+```
+**Explanation:** Updates the `href` attribute of the link.
 
 ```html
 <div id="box" style="width:100px; height:100px; background:red;"></div>
@@ -262,19 +314,49 @@ function changeColor() {
 }
 </script>
 ```
-**Explanation:** The function `changeColor` changes the background color of the `box` element to blue when the button is clicked.
+**Explanation:** Changes the `box` background color when the button is clicked.
+
+---
 
 ### 2.3 Event Handling
-**Theory:**
-- Use event listeners or inline handlers.
-- Example:
 
+- Use event listeners (`addEventListener`) or inline event handlers.
+
+#### Using `addEventListener`
 ```javascript
 document.querySelector('button').addEventListener('click', () => {
   alert('Button clicked!');
 });
 ```
-**Explanation:** This adds an event listener to a button. When clicked, an alert box is displayed with the message "Button clicked!".
+**Explanation:** Adds an event listener that displays an alert when the button is clicked.
+
+#### Handling Keyboard Events
+```javascript
+document.addEventListener('keydown', (event) => {
+  console.log(`Key pressed: ${event.key}`);
+});
+```
+**Explanation:** Logs the key pressed by the user.
+
+#### Handling Mouse Events
+```javascript
+document.getElementById('box').addEventListener('mouseover', () => {
+  console.log('Mouse over the box!');
+});
+```
+**Explanation:** Logs a message when the mouse hovers over the `box` element.
+
+#### Practical Example
+
+```html
+<button id="alertButton">Click Me</button>
+<script>
+document.getElementById('alertButton').addEventListener('click', () => {
+  alert('Button clicked!');
+});
+</script>
+```
+**Explanation:** Displays an alert when the button is clicked.
 
 **Practical:**
 - Create a form that logs the input value on submission.
@@ -295,10 +377,10 @@ document.getElementById('myForm').addEventListener('submit', event => {
 **Explanation:** The form submission is intercepted using `preventDefault()`, and the value entered in the input field is logged to the console.
 
 ### 2.4 Browser Compatibility and Cross-Browser Considerations
-**Theory:**
-- Use feature detection.
-- Example:
 
+When developing web applications, ensuring cross-browser compatibility is crucial. Different browsers may support different features, so feature detection is used to check if a feature is available before using it. This prevents errors in unsupported browsers.
+
+#### Feature Detection Example: `querySelector`
 ```javascript
 if ('querySelector' in document) {
   console.log('querySelector is supported.');
@@ -306,11 +388,12 @@ if ('querySelector' in document) {
   console.log('querySelector is not supported.');
 }
 ```
-**Explanation:** This checks if the `querySelector` method is supported by the browser and logs the appropriate message.
+**Explanation:**
+- The code checks if `querySelector` exists in the `document` object.
+- If present, it logs that `querySelector` is supported.
+- Otherwise, it logs that the method is not available.
 
-**Practical:**
-- Create a feature detection snippet for `localStorage`.
-
+##### 1. Detecting `localStorage`
 ```javascript
 if (typeof localStorage !== 'undefined') {
   console.log('localStorage is available.');
@@ -318,7 +401,62 @@ if (typeof localStorage !== 'undefined') {
   console.log('localStorage is not supported.');
 }
 ```
-**Explanation:** The code detects the presence of `localStorage` and logs whether it is supported or not.
+**Explanation:**
+- Checks if `localStorage` is defined in the `window` object.
+- If available, it logs support for `localStorage`.
+- If not, it logs that `localStorage` is not supported.
+
+##### 2. Checking for `fetch` API Support
+```javascript
+if ('fetch' in window) {
+  console.log('Fetch API is supported.');
+} else {
+  console.log('Fetch API is not supported. Consider using XMLHttpRequest instead.');
+}
+```
+**Explanation:**
+- Verifies if `fetch` is available in the `window` object.
+- If `fetch` is supported, it logs a message confirming availability.
+- Otherwise, it suggests using `XMLHttpRequest` as a fallback.
+
+##### 3. Detecting CSS Grid Support
+```javascript
+if ('grid' in document.body.style) {
+  console.log('CSS Grid is supported.');
+} else {
+  console.log('CSS Grid is not supported. Consider using Flexbox as a fallback.');
+}
+```
+**Explanation:**
+- Checks if `grid` is a property in `document.body.style`.
+- If supported, it logs a message.
+- If not, it suggests using `Flexbox` as an alternative.
+
+##### 4. Checking for `Service Workers`
+```javascript
+if ('serviceWorker' in navigator) {
+  console.log('Service Workers are supported.');
+} else {
+  console.log('Service Workers are not supported.');
+}
+```
+**Explanation:**
+- Determines if `serviceWorker` exists in the `navigator` object.
+- If present, it logs that Service Workers are available.
+- Otherwise, it logs that they are unsupported.
+
+##### 5. Verifying `WebSockets` Support
+```javascript
+if ('WebSocket' in window) {
+  console.log('WebSockets are supported.');
+} else {
+  console.log('WebSockets are not supported. Consider using long polling.');
+}
+```
+**Explanation:**
+- Checks for the presence of `WebSocket` in the `window` object.
+- If available, it logs that WebSockets are supported.
+- Otherwise, it suggests using long polling as a fallback.
 
 ---
 
@@ -328,8 +466,71 @@ if (typeof localStorage !== 'undefined') {
 - Build a counter using closures.
 - Add buttons to increment and reset the counter.
 
+```HTML
+<button id="increment">Increment</button>
+<button id="reset">Reset</button>
+<p>Count: <span id="count">0</span></p>
+<script>
+function createCounter() {
+    let count = 0;
+    return {
+        increment: function() {
+            count++;
+            document.getElementById('count').textContent = count;
+        },
+        reset: function() {
+            count = 0;
+            document.getElementById('count').textContent = count;
+        }
+    };
+}
+const counter = createCounter();
+document.getElementById('increment').addEventListener('click', counter.increment);
+document.getElementById('reset').addEventListener('click', counter.reset);
+</script>
+```
+
 ### Exercise 2: Interactive To-Do List
 - Allow users to add and remove tasks dynamically.
+```HTML
+<input type="text" id="taskInput" placeholder="Enter a task">
+<button onclick="addTask()">Add Task</button>
+<ul id="taskList"></ul>
+<script>
+function addTask() {
+    const taskInput = document.getElementById('taskInput');
+    const taskList = document.getElementById('taskList');
+    
+    if (taskInput.value.trim() === '') return;
+    
+    const li = document.createElement('li');
+    li.textContent = taskInput.value;
+    
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.onclick = () => taskList.removeChild(li);
+    
+    li.appendChild(removeButton);
+    taskList.appendChild(li);
+    
+    taskInput.value = '';
+}
+</script>
+```
 
 ### Exercise 3: Color Theme Switcher
 - Add buttons to toggle between light and dark themes.
+```HTML
+<button onclick="toggleTheme()">Toggle Theme</button>
+<script>
+function toggleTheme() {
+    document.body.classList.toggle('dark-theme');
+}
+</script>
+<style>
+.dark-theme {
+    background-color: black;
+    color: white;
+}
+</style>
+```
