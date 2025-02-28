@@ -1,0 +1,32 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+h1 {
+  color: darkblue;
+}
+
+p {
+  font-size: 18px;
+}
+
+.highlight {
+  background-color: yellow;
+  padding: 10px;
+}
+
+#box {
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#removeMe {
+  color: red;
+  cursor: pointer;
+}
