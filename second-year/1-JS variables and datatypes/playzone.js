@@ -5,3 +5,7 @@ if(+"0") {
 }else{
      console.log("bye")
 }
+
+function function() {
+     
+}

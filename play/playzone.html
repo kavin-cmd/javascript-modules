@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Dom methods examples</title>
+</head>
+<body>
+
+     <!-- <div id="box" style="width:100px; height:100px; background:red;"></div> -->
+     <!-- <button onclick="changeColor()">Change Color</button> -->
+
+
+
+     <input type="text" id="inputField" placeholder="Type something...">
+
+     <div id="container">
+          <h1 class="title"> Welcome to Dom Class </h1>
+          <h2 class="title"> Welcome to Dom Class 2</h2>
+          <p id="message">Hello DOM!</p>
+     </div>
+
+     <script>
+          let inputField = document.getElementById("inputField");
+          inputField.addEventListener("keypress", (event) => {
+               console.log("Key pressed: ", event.key);
+               console.log("Key code: ", event.keyCode);
+          });
+
+
+
+          // document.querySelector('button').addEventListener('click', () => {
+          //      alert('Button clicked!');
+          // });
+          // window.setTimeout(() => {
+          //      console.log("This message appears after 3 seconds");
+          // }, 3000);
+          // function changeColor() {
+          //      const box = document.getElementById('box');
+          //      box.style.background = 'green';
+          // }
+          // const box = document.getElementById('box');
+          // console.log(box.style.background);
+          // box.style.background = 'green';
+          // console.log(box.style.background);
+
+
+
+
+
+
+          // const container = document.getElementById("container");
+          // console.log(container.innerHTML);
+          // container.innerHTML = "<p>Bye Bye </P>";
+          // console.log(container.innerHTML);
+
+          // const message = document.getElementById('message');
+          // console.log(message)
+          // message.textContent = "Yo Bye!"
+          // console.log(message.textContent)
+     </script>
+</body>
+</html>
