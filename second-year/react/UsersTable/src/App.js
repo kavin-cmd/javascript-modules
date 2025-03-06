@@ -1,10 +1,19 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import UsersTable from "./page/user";
+import RandomUsersTable, { Footer, Header } from "./page/RandomUsersTable/RandomUsersTable";
+import About from "./page/About/About";
 
 function App() {
   return (
     <div className="App">
-      <UsersTable />
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<RandomUsersTable />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+        <Footer />
+      </Router>
     </div>
   );
 }

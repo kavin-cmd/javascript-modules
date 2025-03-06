@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import "./user.css";
+import { Link } from "react-router-dom";
+import "./RandomUsersTable.css";
 
 // User Service
-const fetchUsers = async (page = 1, limit = 10) => {
+const fetchUsers = async (page = 1, limit = 5) => {
   try {
     const response = await fetch(`https://api.freeapi.app/api/v1/public/randomusers?page=${page}&limit=${limit}`);
     const data = await response.json();
@@ -15,7 +16,14 @@ const fetchUsers = async (page = 1, limit = 10) => {
 
 // components/ui/header.js
 export function Header() {
-  return <header className="header">Random Users</header>;
+  return (
+    <header className="header">
+      <h1>Random Users</h1>
+      <nav>
+        <Link to="/">Home</Link> | <Link to="/about">About</Link>
+      </nav>
+    </header>
+  );
 }
 
 // components/ui/footer.js
@@ -70,7 +78,6 @@ export default function RandomUsersTable() {
 
   return (
     <div className="container">
-      <Header />
       <div className="content">
         <Card>
           <CardContent>
@@ -120,7 +127,6 @@ export default function RandomUsersTable() {
           </CardContent>
         </Card>
       </div>
-      <Footer />
     </div>
   );
 }
